@@ -1,3 +1,69 @@
-<p>
-  login works!
-</p>
+<section class="signup-forms" >
+    <form
+          fxLayout = "column" 
+          fxLayoutAlign = "center center" 
+          fxLayoutGap = "10px" 
+          [formGroup] = "formLogin" 
+          (ngSubmit) = "onSubmit( )" >
+      <mat-form-field>
+        <input 
+              type = "email" 
+              matInput 
+              placeholder="Introduzca su email" 
+              formControlName = "email"
+              >
+              <mat-hint>Por favor introduzca un email válido</mat-hint>
+              <mat-error > Email inválido o vacío </mat-error>
+                <!-- <mat-error *ngIf="formLogin.controls['email'].errors.email" > Email is invalid </mat-error> -->
+              </mat-form-field>
+              <mat-form-field >
+                <input 
+                type = "password" 
+                matInput 
+                placeholder="Introduzca su password" 
+                formControlName = "password"
+                >
+              <mat-hint>Por favor introduzca un password válido</mat-hint>
+              <mat-error > El campo de password debe de contener un valor </mat-error>
+              <!-- <mat-error *ngIf="formLogin.controls['password']?.hasError('required')" > El campo de password debe contener un valor </mat-error>
+              <mat-error *ngIf="!formLogin.controls['password']?.hasError('required')">Please enter a valid password</mat-error> -->
+              <!-- <mat-hint align="end" > {{ pwInput.value?.length }} / 6 </mat-hint>
+              <mat-hint align="end">{{ pwInput.value?.length || 0 }} / 6</mat-hint> -->
+      </mat-form-field>
+      <button  type = "submit" mat-raised-button color = "primary" [disabled]="formLogin.invalid" >Submit</button>
+    </form>
+  </section>
+  
+
+<!-- 
+<section class="signup-forms" >
+<form fxLayout = "column" fxLayoutAlign = "center center" fxLayoutGap = "10px" #f = "ngForm" (ngSubmit) = "onSubmit( f )" >
+  <mat-form-field>
+    <input 
+          type = "email" 
+          matInput 
+          placeholder="Introduzca su email" 
+          ngModel 
+          name = "email" 
+          email
+          required
+          #emailInput = "ngModel"
+          >
+          <mat-error *ngIf="emailInput.hasError('required')" > Field must not be empty </mat-error>
+          <mat-error *ngIf="!emailInput.hasError('required')" > Email is invalid </mat-error>
+  </mat-form-field>
+  <mat-form-field >
+    <input 
+          type = "password" 
+          matInput 
+          placeholder="Introduzca su password" 
+          ngModel 
+          name = "password"
+          required
+          #pwInput = "ngModel"
+          >
+          <mat-error *ngIf="pwInput.hasError('required')" > Field must not be empty </mat-error>
+  </mat-form-field>
+  <button [disabled] = "f.invalid" type = "submit" mat-raised-button color = "primary" >Submit</button>
+</form>
+</section> -->

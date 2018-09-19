@@ -1,5 +1,5 @@
 <section class="signup-forms" >
-  <form fxLayout = "column" fxLayoutAlign = "center center" #f = "ngForm" (ngSubmit) = "onSubmit( f )" >
+  <form fxLayout = "column" fxLayoutAlign = "center center" fxLayoutGap = "10px" #f = "ngForm" (ngSubmit) = "onSubmit( f )" >
     <mat-form-field>
       <input 
             type = "email" 
@@ -28,6 +28,27 @@
             <!-- <mat-hint align="end" > {{ pwInput.value?.length }} / 6 </mat-hint> -->
             <mat-hint align="end">{{ pwInput.value?.length || 0 }} / 6</mat-hint>
     </mat-form-field>
+    <mat-form-field>
+      <input 
+            matInput 
+            placeholder="Tu cumpleaños" 
+            [matDatepicker] = "picker"
+            [max] = "maxDate"
+            ngModel
+            name = "birthdate"
+            required
+            >
+      <mat-datepicker-toggle 
+            matSuffix 
+            [for] = "picker" >
+          </mat-datepicker-toggle>
+      <mat-datepicker #picker ></mat-datepicker>
+    </mat-form-field>
+    <mat-checkbox 
+            color = "primary"
+            ngModel 
+            name = "agree" 
+            required >¿Está de acuerdo con los términos?</mat-checkbox>
     <button [disabled] = "f.invalid" type = "submit" mat-raised-button color = "primary" >Submit</button>
   </form>
 </section>
