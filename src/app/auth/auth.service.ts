@@ -1,10 +1,10 @@
+import { UIService } from './../shared/ui.service';
 import { TrainingService } from './../training/training.service';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { AngularFireAuth } from '@angular/fire/auth';
 
-import { User } from './user.model';
 import { AuthData } from './auth-data.model';
 import { Subject } from 'rxjs';
 
@@ -16,10 +16,11 @@ export class AuthService {
   authChange = new Subject<boolean>();
   private isAuthenticated = false;
 
-  constructor( 
+  constructor(
       private router: Router,
       private afAuth: AngularFireAuth,
-      private trainingService: TrainingService
+      private trainingService: TrainingService,
+      private uiService: UIService
   ) { }
 
   initAuthListener() {
@@ -34,31 +35,35 @@ export class AuthService {
         this.router.navigate( ['/login'] );
         this.isAuthenticated = false;
       }
-    })
+    });
   }
   registerUser ( authData: AuthData ) {
+    this.uiService.loadingStateChanged.next( true );
     this.afAuth.auth
     .createUserWithEmailAndPassword( authData.email, authData.password )
     .then( result => {
+      this.uiService.loadingStateChanged.next( false );
     })
     .catch ( err => {
-      console.log( err );
+      this.uiService.loadingStateChanged.next( false );
+      this.uiService.showSnackbar( err.message, null, 3000 );
     });
   }
 
   login( authData: AuthData ) {
-
+    this.uiService.loadingStateChanged.next( true );
     this.afAuth.auth
     .signInWithEmailAndPassword(
       authData.email,
       authData.password
-    )
-    .then( result => {
-      console.log( result );
-    })
-    .catch ( err => {
-      console.log( err );
-    });
+      )
+      .then( result => {
+        this.uiService.loadingStateChanged.next( false );
+      })
+      .catch ( err => {
+        this.uiService.loadingStateChanged.next( false );
+        this.uiService.showSnackbar( err.message, null, 3000 );
+      });
   }
 
   logout() {
